@@ -49,7 +49,6 @@ public class Topic03_XpathCss {
 ////        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
 ////        element.sendKeys("admin");
         driver.findElement(By.xpath("//input[starts-with(@data-spm-anchor-id,'a2o4n.homepage')]"));
-
     }
 
     @AfterClass
