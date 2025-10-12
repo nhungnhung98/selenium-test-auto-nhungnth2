@@ -135,6 +135,63 @@ public class Topic07_ElementExcercise {
 //    }
 //}
 
+    @Test
+    public void TC_03_Login_Empty(){
+        driver.get("https://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+
+        driver.findElement(By.cssSelector("input#email")).clear();
+        driver.findElement(By.cssSelector("input#pass")).clear();
+        driver.findElement(By.cssSelector("button#send2")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-email")).getText(),"This is a required field.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-pass")).getText(),"This is a required field.");
+
+    }
+    @Test
+    public void TC_04_Login_Invalid_Email(){
+        driver.get("https://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("123@123");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123456");
+        driver.findElement(By.cssSelector("button#send2")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-validate-email-email")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("p.required")).getText(),"* Required Fields");
+    }
+    @Test
+    public void TC_05_Login_Invalid_Password(){
+        driver.get("https://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("test@gmail.com");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123");
+        driver.findElement(By.cssSelector("button#send2")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-validate-password-pass")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("p.required")).getText(),"* Required Fields");
+    }
+
+    @Test
+    public void TC_06_Login_Incorrect() throws InterruptedException {
+        driver.get("https://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("test@gmail.com");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123456");
+        driver.findElement(By.cssSelector("button#send2")).click();
+        Thread.sleep(2000);
+
+        Assert.assertEquals(driver.getCurrentUrl(),"http://live.techpanda.org/index.php/customer/account/loginPost/");
+        Assert.assertTrue(driver.findElement(By.xpath("//h1[text()='The information you’re about to submit is not secure']")).isDisplayed());
+        Thread.sleep(2000);
+
+        driver.findElement(By.cssSelector("button#proceed-button")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//span[text()='Invalid login or password.']")).isDisplayed());
+
+    }
+
     @AfterClass
     public void afterClass() {
         driver.quit();
