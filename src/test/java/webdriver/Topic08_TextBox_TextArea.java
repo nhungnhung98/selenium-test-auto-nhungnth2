@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -15,7 +17,7 @@ import java.util.Random;
 
 public class Topic08_TextBox_TextArea {
     WebDriver driver;
-    String firstName, lastName, emailAddress, password, fullName;
+    String firstName, lastName, emailAddress, password, fullName, employeeId, passportNumber, passportComment;
 
     @BeforeClass
     public void beforeClass() {
@@ -27,7 +29,9 @@ public class Topic08_TextBox_TextArea {
         lastName = "Nguyen";
         fullName = firstName + " " + lastName;
         emailAddress = "nhung" + new Random().nextInt(999) + "@hotmail.com";
-        password = "123456789";
+        password = "Tessting@123";
+        passportNumber="431276152";
+        passportComment="Assigned Immigration\n Records";
     }
 
     @Test
@@ -65,13 +69,93 @@ public class Topic08_TextBox_TextArea {
 
     }
     @Test
-    public void TC_02_() {
+    public void TC_02_OrangeHRM() throws InterruptedException
+    {
+        //Login
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-        driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
-        Assert.assertEquals(driver.getTitle(),"Customer Login");
+        Thread.sleep(5000);
+        driver.findElement(By.xpath("//input[@name='username']")).sendKeys("Admin");
+        driver.findElement(By.xpath("//input[@name='passsword']")).sendKeys("admin123");
+        driver.findElement(By.cssSelector("button.orangehrm-login-button")).click();
+
+        //Wait for loading icon disappear
+        Assert.assertTrue(isLoadingIconDisappear());
+
+        //verify hien thi Dashboard
+        Assert.assertTrue(driver.findElement(By.xpath("//h6[text()='Dashboard']")).isDisplayed());
+
+        //click PIM
+        driver.findElement(By.xpath("//span[text()='PIM']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//span[text()='PIM']")).isDisplayed());
+
+        //Add employee
+        driver.findElement(By.xpath("//a[text()='Add Employee]")).click();
+        Assert.assertTrue(isLoadingIconDisappear());
+
+        //Create new Employee
+        driver.findElement(By.xpath("input[name='firstName']")).sendKeys(firstName);
+        driver.findElement(By.xpath("input[name='lastName']")).sendKeys(lastName);
+
+        employeeId=driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getDomProperty("value");
+        System.out.println(employeeId);
+
+        driver.findElement(By.xpath("oxd-switch-input oxd-switch-input--active --label-right")).click();
+        Thread.sleep(2000);
+
+
+        driver.findElement(By.xpath("//label[text()='Username']/parent::div/following-sibling::div/input")).sendKeys(firstName);
+        driver.findElement(By.xpath("//label[text()='Password']/parent::div/following-sibling::div/input")).sendKeys(password);
+        driver.findElement(By.xpath("//label[text()='Confirm Password']/parent::div/following-sibling::div/input")).sendKeys(password);
+
+        driver.findElement(By.xpath("//button[contains(string(),'Save'")).click();
+
+        //verify success message display
+        Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Sucessfully Saved']")).isDisplayed());
+        Assert.assertTrue(isLoadingIconDisappear());
+
+        //Personal detail list
+        Assert.assertEquals(driver.findElement(By.xpath("//input[@name='firstName']")).getDomProperty("value"),firstName);
+        Assert.assertEquals(driver.findElement(By.xpath("//input[@name='lastName']")).getDomProperty("value"),lastName);
+        Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getDomProperty("value"),employeeId);
+        //Immigration page
+        driver.findElement(By.xpath("//a[text()='Immigration']")).click();
+        Assert.assertTrue(isLoadingIconDisappear());
+
+        driver.findElement(By.xpath("//h6[text()='Assigned Immigration Records']/following-sibling::button[contains(string(),'Add')]")).click();
+
+        driver.findElement(By.xpath("//label[text()='Number']/parent::div/following-sibling::div/input")).sendKeys(passportNumber);
+        driver.findElement(By.xpath("//label[text()='Comments']/parent::div/following-sibling::div/textarea")).sendKeys(passportComment);
+
+        driver.findElement(By.xpath("//button[contains(string(),'Save')]")).click();
+        Thread.sleep(2000);
+
+        // verify success message display
+        Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Successfully Saved']")).isDisplayed());
+        Assert.assertTrue(isLoadingIconDisappear());
+
+        Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Passport']/parent::div/following-sibling::div/div[text()='"+
+                passportNumber+"']")).isDisplayed());
+
+        //logout
+        driver.findElement(By.cssSelector("li.oxd-userdropdown")).click();
+        driver.findElement(By.xpath("//a[text()='Logout']")).click();
+
+        //login = acc được tạo
+        driver.findElement(By.cssSelector("input[name='username']")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input[name='password']")).sendKeys(password);
+        driver.findElement(By.cssSelector("button.orangehrm-login-button")).click();
+
+        // đợi cho all item biến mất
+        Assert.assertTrue(isLoadingIconDisappear());
+        Assert.assertTrue(driver.findElement(By.xpath("//h6[text()='Dashboard']")).isDisplayed());
+
 
     }
 
+    private Boolean isLoadingIconDisappear(){
+        return new WebDriverWait(driver,Duration.ofSeconds(15)).until(ExpectedConditions
+                .invisibilityOfAllElements(driver.findElements(By.cssSelector("div.oxd-loading-spinner"))));
+    }
     @AfterClass
     public void afterClass()
     {
