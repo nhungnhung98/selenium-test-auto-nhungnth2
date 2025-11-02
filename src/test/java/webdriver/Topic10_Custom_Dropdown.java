@@ -149,9 +149,8 @@ public class Topic10_Custom_Dropdown {
 
         selectItemInEditableDropdown("//input[@id='job_id']", "//div[@id='job_id_list']/following-sibling::div[@class='rc-virtual-list']//div[@class='ant-select-item-option-content']", "Ngân hàng");
 
-        //tại sao phải đi từ node có tile='Nghề nghiệp'?
         Assert.assertEquals(driver.findElement(By.xpath("//label[@title='Nghề nghiệp']/parent::div/following-sibling::div//span[@class='ant-select-selection-item']")).getText(), "Ngân hàng");
-        // cách này có được k?
+
         Assert.assertEquals(driver.findElement(By.xpath("//span[@class='ant-select-selection-item']")).getText(), "Ngân hàng");
 
         selectItemInEditableDropdown("//input[@id='gender']", "//div[@id='gender_list']/following-sibling::div[@class='rc-virtual-list']//div[@class='ant-select-item-option-content']", "Nữ");
