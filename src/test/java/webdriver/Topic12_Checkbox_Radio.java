@@ -100,14 +100,62 @@ public class Topic12_Checkbox_Radio {
     }
 
     @Test
-    public void TC_03() {
+    public void TC_03() throws InterruptedException {
         driver.get("https://login.ubuntu.com/");
         By newUserRadio = By.cssSelector("input#id_new_user");
         By acceptToCheckbox = By.cssSelector("input#id_accept_tos");
 
+        //1. Nếu dùng thẻ input để click --> Failed
+        // verify được do isSelected() chỉ dùng cho thẻ input
+        /*Assert.assertFalse(driver.findElement(By.cssSelector("input#id_new_user")).isSelected());
+        driver.findElement(By.cssSelector("input#id_new_user")).click();*/
+
+        //2. Không dùng thẻ input để click - dùng thẻ khác: span, lable,...
+        //thẻ nào đè lên thẻ input thì dùng để click
+        //Không verify được vì thẻ label k áp dụng hàm isSelected() được
+       /* driver.findElement(By.cssSelector("label[class='new-user']")).click();
+        Thread.sleep(5000);
+        Assert.assertTrue(driver.findElement(By.cssSelector("label[class='new-user']")).isSelected());*/
+
+        //3. Click thì dùng thẻ label, verify dùng thẻ input
+        // thực tế k làm tnay: vì dự án thực tế ít khi design việc 1 element sử dụng 2 locator để handle
+
+        /*driver.findElement(acceptToCheckbox).click();
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(newUserRadio).isSelected());
+
+        driver.findElement(By.cssSelector("label[for='id_accept_tos']")).click();
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(acceptToCheckbox).isSelected());*/
+
+        //4. sử dụng thẻ input để click và verify
+        // k dùng hàm click() của webElement
+        // Dùng hàm click() của javascriptExecutor: sai hành vi của End user
+        jsExecutor.executeScript("arguments[0].click();",driver.findElement(newUserRadio));//lấy driver.findElement(newUserRadio) gán vào argument[0] rô click
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(newUserRadio).isSelected());
+
+        jsExecutor.executeScript("arguments[0].click();",driver.findElement(acceptToCheckbox));
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(acceptToCheckbox).isSelected());
+         //Chỉ áp dụng JavaScriptExecutor cho custom checkbox/radio thôi
+        // còn Default thì k nên dùng - dùng theo WebElement click()
 
     }
+    @Test
+    public void TC_04() throws InterruptedException {
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+        By conthoRadio = By.cssSelector("div[aria-label='Cần Thơ']");
+        By quangbinhCheckbox = By.cssSelector("div[aria-label='Quảng Bình']");
+        Thread.sleep(2000);
 
+        driver.findElement(conthoRadio).click();
+        driver.findElement(quangbinhCheckbox).click();
+        Thread.sleep(2000);
+
+        Assert.assertEquals(driver.findElement(conthoRadio).getDomAttribute("aria-checked"),"true");
+        Assert.assertEquals(driver.findElement(quangbinhCheckbox).getDomAttribute("aria-checked"),"true");
+    }
     @AfterClass
     public void afterClass() {
         driver.quit();
