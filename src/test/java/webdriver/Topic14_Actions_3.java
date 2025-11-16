@@ -22,7 +22,7 @@ public class Topic14_Actions_3 {
     WebDriver driver;
     Select select;
     JavascriptExecutor jsExecutor;
-
+    Actions actions;
 
     @BeforeClass
     public void beforClass() {
@@ -30,11 +30,11 @@ public class Topic14_Actions_3 {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));// chờ cho việc tìm kiếm element
         driver.manage().window().maximize();
 
-        Actions actions = new Actions(driver);
+        actions = new Actions(driver);
     }
 
     @Test
-    public void TC_01_Drag_and_Drop(){
+    public void TC_01_Drag_and_Drop_HTML4(){
         driver.get("https://automationfc.github.io/kendo-drag-drop/");
 
 
@@ -46,11 +46,18 @@ public class Topic14_Actions_3 {
         Assert.assertEquals(Color.fromString(targetCircle.getCssValue("background-color")).asHex().toUpperCase(), "#03A9F4");
         Assert.assertEquals(targetCircle.getText(), "You did great!");
 
-
     }
     @Test
-    public void TC_02(){
-        driver.get("https://automationfc.github.io/jquery-selectable/");
+    public void TC_01_Drag_and_Drop_HTML5(){
+        driver.get("https://automationfc.github.io/drag-drop-html5/");
+
+        WebElement sourceCirle = driver.findElement(By.cssSelector("div#colum-a"));
+        WebElement targetCircle =driver.findElement(By.cssSelector("div#colum-b"));
+
+        actions.dragAndDrop(sourceCirle, targetCircle).perform();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#colum-a>header")).getText(),"B");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#colum-b>header")).getText(),"a");
 
 
     }

@@ -1,9 +1,6 @@
 package webdriver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -23,7 +20,8 @@ public class Topic14_Actions_2 {
     WebDriver driver;
     Select select;
     JavascriptExecutor jsExecutor;
-
+    Actions actions;
+    String osName = System.getProperty("os.name");
 
     @BeforeClass
     public void beforClass() {
@@ -32,7 +30,7 @@ public class Topic14_Actions_2 {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));// chờ cho việc tìm kiếm element
         driver.manage().window().maximize();
 
-        Actions actions = new Actions(driver);
+        actions = new Actions(driver);
     }
 
     @Test
@@ -42,9 +40,9 @@ public class Topic14_Actions_2 {
         List<WebElement> allItems =driver.findElements(By.cssSelector("ol#selectable>li"));
 
         //Chon tu 1-12
-        Actions actions;
+
         actions.clickAndHold(allItems.getFirst()).pause(Duration.ofSeconds(2)).perform();
-        actions.moveToElement(allItems).get(11).relesase().perform();
+        actions.moveToElement(allItems.get(11)).release().perform();
         actions.pause(Duration.ofSeconds(2)).perform();
 
         //Verify da chon
@@ -58,7 +56,13 @@ public class Topic14_Actions_2 {
         List<WebElement> allItems =driver.findElements(By.cssSelector("ol#selectable>li"));
 
         //Nhan phim CTRL xuong chưa nhả ra
-        actions.keyDown(KeysCONTROL).perform();
+        Keys keys = null;
+
+        if (osName.contains("Windows")) {
+            keys = Keys.CONTROL;
+        } else keys = Keys.COMMAND;
+
+        actions.keyDown(keys).perform();
 
         // Chon 3 5 7 9 13 17 21 25 29
         actions.click(allItems.get(2))
@@ -73,7 +77,7 @@ public class Topic14_Actions_2 {
                 .perform();
 
        //Nha phim CTRL ra
-        actions.keyUp(KeysCONTROL).perform();
+        actions.keyUp(keys).perform();
         actions.pause(Duration.ofSeconds(2)).perform();
 
         //Verify da chon
@@ -105,7 +109,7 @@ public class Topic14_Actions_2 {
         Assert.assertEquals(driver.findElement(By.cssSelector("p#demo")).getText(), "Hello Automation Guys!");
     }
     @Test
-    public void TC_04_Right_Click(){
+    public void TC_04_Right_Click() throws InterruptedException {
         //Do element can scroll xuong duoi moi nhin thay de click nen can xu ly them Js
         driver.get("https://swisnl.github.io/jQuery-contextMenu/demo.html");
 

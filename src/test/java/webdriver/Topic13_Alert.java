@@ -61,7 +61,7 @@ public class Topic13_Alert {
         driver.get("https://automationfc.github.io/basic-form/");
         driver.findElement(By.xpath("//button[text()='Click for JS Confirm']")).click();
 
-       // new WebDriverWait(driver, Duration.ofSeconds(15).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
 
         Alert alert =driver.switchTo().alert();
 
@@ -79,7 +79,7 @@ public class Topic13_Alert {
         driver.get("https://automationfc.github.io/basic-form/");
         driver.findElement(By.xpath("//button[text()='Click for JS Prompt']")).click();
 
-       // new WebDriverWait(driver, Duration.ofSeconds(15).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
 
         Alert alert =driver.switchTo().alert();
 

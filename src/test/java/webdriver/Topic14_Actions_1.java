@@ -18,7 +18,7 @@ public class Topic14_Actions_1 {
     WebDriver driver;
     Select select;
     JavascriptExecutor jsExecutor;
-
+    Actions actions;
 
     @BeforeClass
     public void beforClass() {
@@ -46,19 +46,19 @@ public class Topic14_Actions_1 {
     }
     @Test
     public void TC_02() throws InterruptedException {
-//        driver.get("https://www.fahasa.com/");
-//        Thread.sleep(1000);
-//
-//        //hover vào icon menu
-//        actions.moveToElement(driver.findElement(By.cssSelector("span.icon_menu"))).perform();
-//        actions.pause(Duration.ofSeconds(2)).perform();
-//
-//        //hover vào Sách giáo khoa 2025
-//        actions.moveToElement(driver.findElement(By.xpath("//ul[@class='nav navbar-nav verticalmenu']//span[text()='Sách Giáo Khoa 2025']"))).perform();
-//
-//        driver.findElement(By.xpath("//div[@class='fhs_column_stretch']//a[text()='Luyện Thi Môn Toán']")).click();
-//        Thread.sleep(2000);
-//        Assert.assertTrue(driver.findElement(By.xpath("//ol[@class='breadcrumb']//strong[text()='Toán']")).isDisplayed());
+        driver.get("https://www.fahasa.com/");
+        Thread.sleep(1000);
+
+        //hover vào icon menu
+        actions.moveToElement(driver.findElement(By.cssSelector("span.icon_menu"))).perform();
+        actions.pause(Duration.ofSeconds(2)).perform();
+
+        //hover vào Sách giáo khoa 2025
+        actions.moveToElement(driver.findElement(By.xpath("//ul[@class='nav navbar-nav verticalmenu']//span[text()='Sách Giáo Khoa 2025']"))).perform();
+
+        driver.findElement(By.xpath("//div[@class='fhs_column_stretch']//a[text()='Luyện Thi Môn Toán']")).click();
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(By.xpath("//ol[@class='breadcrumb']//strong[text()='Toán']")).isDisplayed());
 
     }
     @AfterClass
