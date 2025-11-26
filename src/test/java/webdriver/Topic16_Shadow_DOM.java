@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Topic16_Shadow_DOM {
     WebDriver driver;
@@ -62,9 +63,41 @@ public class Topic16_Shadow_DOM {
         //Dang thao tac voi Shaow DOM thu 2
         Assert.assertEquals(secondShadowRoot.findElement(By.cssSelector("div#nested_shadow_content>div")).getText(),"nested text");
 
-
     }
 
+    @Test
+    public void TC_03() throws InterruptedException {
+        driver.get("https://books-pwakit.appspot.com/");
+        Thread.sleep(4000);
+
+        WebElement bookappShadowHost = driver.findElement(By.cssSelector("book-app"));
+        SearchContext bookShadowRoot = bookappShadowHost.getShadowRoot();
+
+        bookShadowRoot.findElement(By.cssSelector("book-input-decorator>input#input")).sendKeys("Harry Porter");
+
+        WebElement bookDecoratorHost = bookShadowRoot.findElement(By.cssSelector("book-input-decorator"));
+        SearchContext bookDecoratorRoot = bookDecoratorHost.getShadowRoot();
+
+        bookShadowRoot.findElement(By.cssSelector("div.icon")).click();
+
+        Thread.sleep(5000);
+
+        bookappShadowHost = driver.findElement(By.cssSelector("book-app"));
+        bookShadowRoot = bookappShadowHost.getShadowRoot();
+
+        WebElement bookExplorerShadowHost = bookShadowRoot.findElement(By.cssSelector("book-explore"));
+        SearchContext bookExplorerShadowRoot = bookExplorerShadowHost.getShadowRoot();
+        Thread.sleep(3000);
+
+        List<WebElement> listBookItems = bookExplorerShadowRoot.findElements(By.cssSelector("section>ul.books>li>book-item"));
+
+        for (WebElement bookItem : listBookItems) {
+            SearchContext bookItemShadowRoot = bookItem.getShadowRoot();
+            System.out.println(bookItemShadowRoot.findElement(By.cssSelector("div.title-container>h2.title")).getText());
+        }
+
+
+    }
 
     @AfterClass
     public void afterClass() {
