@@ -3,7 +3,9 @@ package webdriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -65,8 +67,23 @@ public class Topic17_iFrame {
         driver.findElement(By.xpath("//a[@title='Get this form']")).click();
 
     }
+    @Test
+    public void TC_03_HDFC() throws InterruptedException {
+        driver.get("https://netbanking.hdfcbank.com/netbanking/");
+        Thread.sleep(4000);
 
+        driver.switchTo().frame("login_page");
 
+        driver.findElement(By.cssSelector("input[name='fldLoginUserId']")).sendKeys("Jonh");
+        driver.findElement(By.cssSelector("a.login-btn")).click();
+        Thread.sleep(4000);
+
+        driver.switchTo().defaultContent();
+
+        driver.findElement(By.cssSelector("input#keyboard")).sendKeys("123456");
+        driver.findElement(By.cssSelector("a#loginBtn")).click();
+
+    }
     @AfterClass
     public void afterClass() {
         driver.quit();
