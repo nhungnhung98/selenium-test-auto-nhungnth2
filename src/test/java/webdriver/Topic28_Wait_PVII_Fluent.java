@@ -49,20 +49,16 @@ public class Topic28_Wait_PVII_Fluent {
 
         driver.get("https://automationfc.github.io/dynamic-loading/");
 
-        driver.findElement(By.cssSelector("div#start>button"));
+        clickToElement("div#start>button");
 
-        String helloText= fluentWait.until(new Function<WebDriver, String>() {
-            @Override
-            public String apply(WebDriver webDriver) {
-                return webDriver.findElement(By.cssSelector("div#finish>h4")).getText();
-            }
-        });
-        Assert.assertEquals(helloText,"Hello World");
+        String helloText = getElementText("div#finish>h4");
+
+        Assert.assertEquals(helloText, "Hello World!");
 
     }
     @Test
     public void TC_02() throws InterruptedException {
-        driver.get("c");
+        driver.get("https://automationfc.github.io/fluent-wait/");
 
         WebElement countdownElement = getElement("div#javascript_countdown_time");
 
@@ -82,7 +78,12 @@ public class Topic28_Wait_PVII_Fluent {
         }));
 
     }
+    @Test
+    public void TC_03_WebdriverWait() {
+        driver.get("https://automationfc.github.io/fluent-wait/");
 
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='javascript_countdown_time' and text()='01:01:00']")));
+    }
 
     //Viết hàm để sửa lại các hàm findElement/click/getText/isDisplayed với pooling time mới
     private WebElement getElement(String cssLocator) {
