@@ -28,6 +28,11 @@ public class Topic02_Assert {
         Object name="Đặng Thuỳ Trâm";
 
         Assert.assertEquals(studentName, name);
+        int iNumber=15;
+        float fNumber=15;
+
+        Assert.assertEquals(iNumber, fNumber);
+
 
 
 

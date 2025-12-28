@@ -2,6 +2,11 @@
 
 <suite name="UCL" verbose="1">
     <test name="Run on CHROME">
+        <groups>
+            <run>
+                <include name="platformWeb"/>
+            </run>
+        </groups>
         <classes>
             <class name="basic.Topic01_Annotations"/>
             <methods>

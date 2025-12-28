@@ -1,7 +1,8 @@
 package basic;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Test;
+import org.testng.annotations.*;
 
 public class Topic01_Annotations {
 
@@ -9,41 +10,41 @@ public class Topic01_Annotations {
         System.out.println("Before Suite");
     }
 
-//    @BeforeMethod
-//    public void beforeMethod() {
-//        System.out.println("Before Method");
-//    }
-//
-//    @BeforeClass
-//    public void beforeClass() {
-//        System.out.println("Before Class");
-//    }
-//
-//    @BeforeTest
-//    public void beforeTest() {
-//        System.out.println("Before Test");
-//    }
-//
-//
-//    @AfterSuite
-//    public void afterSuite() {
-//        System.out.println("After Suite");
-//    }
-//
-//    @AfterMethod
-//    public void afterMethod() {
-//        System.out.println("After Method");
-//    }
-//
-//    @AfterClass
-//    public void afterClass() {
-//        System.out.println("After Class");
-//    }
-//
-//    @AfterTest
-//    public void afterTest() {
-//        System.out.println("After Test");
-//    }
+    @BeforeMethod
+    public void beforeMethod() {
+        System.out.println("Before Method");
+    }
+
+    @BeforeClass
+    public static void beforeClass() {
+        System.out.println("Before Class");
+    }
+
+    @BeforeTest
+    public void beforeTest() {
+        System.out.println("Before Test");
+    }
+
+
+    @AfterSuite
+    public void afterSuite() {
+        System.out.println("After Suite");
+    }
+
+    @AfterMethod
+    public void afterMethod() {
+        System.out.println("After Method");
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        System.out.println("After Class");
+    }
+
+    @AfterTest
+    public void afterTest() {
+        System.out.println("After Test");
+    }
 
     @Test
     public void TC_01(){
