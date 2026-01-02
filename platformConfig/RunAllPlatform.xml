@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="All platform Automation Testing" verbose="1" parallel="tests" thread-count="">
+
+<suite-files>
+    <suite-file path="RunOnMobilePlatform.xml"></suite-file>
+    <suite-file path="RunOnWebPlatform.xml"></suite-file>
+</suite-files>
+
+</suite>

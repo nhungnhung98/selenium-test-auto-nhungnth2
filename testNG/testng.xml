@@ -7,15 +7,16 @@
                 <include name="platformWeb"/>
             </run>
         </groups>
+
+        <packages>
+            <package name="platformMobile"></package>
+            <package name="platformWeb"></package>
+        </packages>
+
         <classes>
             <class name="basic.Topic01_Annotations"/>
-            <methods>
-                <include name="TC_01"/>
-            </methods>
             <class name="basic.Topic02_Assert"/>
         </classes>
     </test>
-
-
 
 </suite>

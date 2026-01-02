@@ -1,13 +1,11 @@
 package basic;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.testng.annotations.*;
 
 public class Topic07_Description {
 
     @BeforeClass
-    public static void beforeClass() {
+    public void beforeClass() {
 }
 
     @Test (description="Azure- Register new account")

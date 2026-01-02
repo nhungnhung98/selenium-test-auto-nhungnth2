@@ -1,13 +1,10 @@
 package basic;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.DataProvider;
+import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 

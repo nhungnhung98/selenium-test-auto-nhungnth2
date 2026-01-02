@@ -1,12 +1,10 @@
 package platformMobile;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.testng.annotations.*;
 
 public class Mobile_01_User {
     @BeforeClass
-    public static void beforeClass(){
+    public void beforeClass(){
 
     }
 

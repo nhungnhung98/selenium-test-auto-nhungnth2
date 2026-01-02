@@ -1,11 +1,8 @@
 package basic;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
@@ -27,7 +24,7 @@ public class Topic04_Alway_Run {
     }
 
     @Test
-    public void regiter() {
+    public void register() {
         System.out.println("Action and verify");
     }
 
